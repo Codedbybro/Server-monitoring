@@ -88,7 +88,7 @@ The monitor checks the server and displays the results directly in the terminal.
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/server-monitor.git
+git clone https://github.com/Codedbybro/server-monitor.git
 cd server-monitor
 ```
 
