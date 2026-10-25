@@ -1,141 +1,41 @@
-# 🖥️ Server Monitor
+# Server Monitor
 
-**Lightweight Linux server monitoring tool written in Python.**
+A small Python CLI for checking resource usage and basic network availability on a Linux host. Built as a hands-on Linux, Python, and monitoring practice project.
 
-Server Monitor is a simple terminal utility for quickly checking the current state of a Linux server.
+## Features
+- CPU, RAM, and root-filesystem usage via psutil
+- Uptime
+- Internet connectivity check (TCP connection to 8.8.8.8:53)
+- TCP checks for selected ports on 127.0.0.1
+- Combined OK / WARNING / CRITICAL status
 
-## ✨ Features
+## Requirements
+- Python 3.10+
+- Linux is the intended environment
+- psutil (installed from requirements.txt)
 
-* 🧠 CPU usage monitoring
-* 💾 RAM usage monitoring
-* 💿 Disk usage monitoring
-* ⏱️ Server uptime
-* 🌐 Internet connectivity check
-* 🔌 TCP port monitoring
-* 🚦 Automatic server health status
+## Run locally
+1. Clone this repository and enter its directory.
+2. Create a virtual environment: python3 -m venv .venv
+3. Activate it: source .venv/bin/activate
+4. Install dependencies: python -m pip install -r requirements.txt
+5. Run: python monitor.py
 
-## 🚦 Status Levels
+The port checks currently target localhost and the ports are configured in monitor.py. They indicate whether a service accepts a TCP connection; they do not verify application-level health.
 
-The application automatically evaluates CPU, RAM and disk usage.
+## Tests
+Run: python -m unittest discover -s tests -v
 
-| Status          | Meaning                                                  |
-| --------------- | -------------------------------------------------------- |
-| 🟢 **OK**        | Resource usage is within normal limits                   |
-| 🟡 **WARNING**  | Resource usage is high and should be monitored            |
-| 🔴 **CRITICAL** | Resource usage is critically high and may require action |
+Unit tests cover status thresholds and aggregation. GitHub Actions runs Python compilation and these tests on pushes and pull requests.
 
-### What does `WARNING` mean?
+## Project layout
+- .github/workflows/ci.yml — CI workflow
+- monitor.py — CLI implementation
+- requirements.txt — runtime dependencies
+- tests/test_monitor.py — unit tests
 
-`WARNING` does **not** mean that the server is broken or that a rocket is flying into it. 🚀
+## Current limitations / next steps
+This is an educational CLI, not a production monitoring stack. It currently performs a one-shot report and has no alert delivery, persistent metrics, remote-host configuration, or dashboard. Useful next steps are configurable thresholds and targets, structured output, and alerting.
 
-It simply means that one of the monitored resources has exceeded the warning threshold.
-
-For example:
-
-```text
-CPU:       74.2%   WARNING
-```
-
-This means that CPU usage is relatively high, but the server can continue working normally.
-
----
-
-## 📊 Example of the Application
-
-This is an example of what the program looks like when running:
-
-```text
-=============================================
-          SERVER MONITOR
-=============================================
-
-SYSTEM
----------------------------------------------
-CPU:       34.2%   OK
-RAM:       76.4%   WARNING
-DISK:      41.7%   OK
-UPTIME:     4d 12h 31m
-STATUS:   WARNING
-
-NETWORK
----------------------------------------------
-Internet: ONLINE
-
-PORTS
----------------------------------------------
-22     SSH      OPEN
-80     HTTP     OPEN
-443    HTTPS    CLOSED
-3000   App      CLOSED
-
-=============================================
-```
-
-The monitor checks the server and displays the results directly in the terminal.
-
----
-
-## 🛠️ Technologies
-
-* Python 3
-* psutil
-* Linux
-* Git
-* GitHub
-
-## ⚙️ Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/Codedbybro/server-monitor.git
-cd server-monitor
-```
-
-Create a virtual environment:
-
-```bash
-python3 -m venv .venv
-```
-
-Activate it:
-
-```bash
-source .venv/bin/activate
-```
-
-Install the dependency:
-
-```bash
-pip install psutil
-```
-
-Run the monitor:
-
-```bash
-python3 monitor.py
-```
-
-## 📁 Project Structure
-
-```text
-server-monitor/
-├── monitor.py
-├── .gitignore
-└── README.md
-```
-
-## 📌 Project Status
-
-This is an educational DevOps/Python project created to practice:
-
-* Python
-* Linux
-* Networking
-* Git
-* GitHub
-* Server monitoring
-
-The project is actively being developed and will receive additional monitoring features in future versions.
-
-
+## What this project demonstrates
+Python scripting, Linux resource inspection, TCP connectivity checks, dependency isolation with venv, unit testing, and basic CI with GitHub Actions.
